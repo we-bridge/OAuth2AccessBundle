@@ -1,0 +1,5 @@
+services:
+    upstream_authenticator:
+        class: Webridge\Oauth2AccessBundle\Services\UpstreamAuthenticator
+        calls:
+            - [setContainer, ["@service_container"]]

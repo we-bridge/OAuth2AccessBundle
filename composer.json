@@ -1,0 +1,25 @@
+{
+    "name" : "webridge/oauth2-access-bundle",
+    "type" : "symfony-bundle",
+    "description" : "Symfony Oauth2 consumer bundle",
+    "keywords" : ["Symfony", "Oauth2"],
+    "homepage" : "https://github.com/we-bridge/OAuth2AccessBundle",
+    "license" : "MIT",
+    "authors" :
+    [
+        {
+            "name" : "Allan SIMON",
+            "email" : "allan.simon@supinfo.com",
+            "homepage" : "http://allan-simon.github.io/blog",
+            "role" : "Developer"
+        }
+    ],
+    "minimum-stability" : "beta",
+    "require": {
+        "php": ">=5.3.2"
+    },
+    "autoload": {
+        "psr-0": { "webridge\\Oauth2AccessBundle": "" }
+    },
+    "target-dir" : "Webridge/Oauth2AccessBundle"
+}
