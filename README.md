@@ -14,3 +14,12 @@ In your AppKernel:
 
 ```
 ```
+
+## Run the tests
+
+After you've installed the dev dependencies with composer
+you can run the test with
+
+```
+vendor/bin/phpunit
+```
