@@ -16,21 +16,12 @@ class WebridgeOauth2AccessExtension extends Extension
             $container,
             new FileLocator(__DIR__.'/../Resources/config')
         );
+
         $loader->load('services.yml');
         $configuration = new Configuration();
-        $extensionConfig = $this->processConfiguration(
+        $this->processConfiguration(
             $configuration,
             $configs
         );
-
-        $container->setParameter(
-            'oauth2access.upstream_base_url',
-            $extensionConfig['default_transport']
-        );
-    }
-
-    public function getAlias()
-    {
-        return 'webridge_oauth2access';
     }
 }

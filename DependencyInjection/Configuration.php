@@ -11,7 +11,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('oauth2access');
+        $rootNode = $treeBuilder->root('webridge_oauth2_access');
 
         $this->addServersSection($rootNode);
 
@@ -22,7 +22,7 @@ class Configuration implements ConfigurationInterface
     {
         $rootNode
             ->children()
-                ->booleanNode('upstream_base_url:')->isRequired()->end()
+                ->scalarNode('upstream_base_url')->isRequired()->cannotBeEmpty()->end()
             ->end()
         ;
     }

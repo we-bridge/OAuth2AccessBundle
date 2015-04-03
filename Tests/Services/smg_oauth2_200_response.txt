@@ -1,0 +1,20 @@
+HTTP/1.1 200 OK
+Cache-Control: no-cache
+Connection: Keep-Alive
+Content-Type: application/json
+Date: Tue, 10 Mar 2015 06:05:17 GMT
+Keep-Alive: timeout=5, max=100
+Server: Apache/2.4.7 (Ubuntu)
+Transfer-Encoding: chunked
+X-Debug-Token: c9331c
+X-Debug-Token-Link: /app_dev.php/_profiler/c9331c
+X-Powered-By: PHP/5.5.9-1ubuntu4.5
+
+{
+    "email": "user1@dev.null",
+    "id": 42,
+    "roles": [
+        "ROLE_USER"
+    ],
+    "username": "user1"
+}
