@@ -5,33 +5,28 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Command\Guzzle\GuzzleClient;
 use GuzzleHttp\Command\Guzzle\Description;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\DependencyInjection\ContainerAware;
 
-class SMGUserProxy
+class SMGUserProxy extends ContainerAware
 {
-    const URL_PATH = 'oauth/access_token_valid/';
+    private $baseUrl;
 
-    private $serviceUrl;
-
-    public static function createForBaseUrl($baseUrl)
+    public static function configureRemoteEndpoints()
     {
-        $serviceUrl = $baseUrl . self::URL_PATH;
-        return new self($serviceUrl);
+        $this->httpClient = new Client();
+        $this->baseUrl = $this->container->getParameter('webridge_oauth2_access.upstream_base_url');
+
+        $this->upstreamOauth2Service = $this->buildServiceDescription();
     }
 
-    private function __construct($serviceUrl)
+    public function buildServiceDescription()
     {
-        if (empty($serviceUrl)) {
-            throw new \RuntimeException('$serviceUrl not set');
-        }
-
-        $this->serviceUrl = $serviceUrl;
-
-        $this->serviceDescription = new Description([
-            'baseUrl' => $this->serviceUrl,
+        return new Description([
+            'baseUrl' => $this->baseUrl,
             'operations' => [
                 'access_token_valid' => [
                     'httpMethod' => 'GET',
-                    'uri' => $this->serviceUrl.'{token}',
+                    'uri' => 'oauth/access_token_valid/{token}',
                     'responseModel' => 'getResponse',
                     'parameters' => [
                         'token' => [
@@ -50,9 +45,7 @@ class SMGUserProxy
                 ]
             ]
         ]);
-        $this->httpClient = new Client();
     }
-
     public function attachListener($listener)
     {
         $this->httpClient->getEmitter()->attach($listener);
@@ -70,7 +63,7 @@ class SMGUserProxy
     private function requestUserinfoFromOauthService($credentials)
     {
         $bearerToken = $this->extractBearerToken($credentials);
-        $this->guzzleClient = new GuzzleClient($this->httpClient, $this->serviceDescription);
+        $this->guzzleClient = new GuzzleClient($this->httpClient, $this->upstreamOauth2Service);
         return $this->guzzleClient->access_token_valid(['token'=>$bearerToken]);
     }
 

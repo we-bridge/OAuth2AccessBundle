@@ -8,6 +8,6 @@ class UpstreamAuthenticator extends ContainerAware
 {
     public function getBaseUrl()
     {
-        return $this->container->getParameter('oauth2access.upstream_base_url');
+        return $this->container->getParameter('webridge_oauth2_access.upstream_base_url');
     }
 }

@@ -4,11 +4,13 @@ services:
         calls:
             - [setContainer, ["@service_container"]]
 
-    webridge_oauth2_access.pre_authenticator:
-        class:     Webridge\Oauth2AccessBundle\Services\SMGUserAuthenticator
+    webridge_oauth2_access.upstream_pre_authenticator:
+        class:  Webridge\Oauth2AccessBundle\Services\SMGUserAuthenticator
         arguments: [ @webridge_oauth2_access.smg_user_proxy ]
 
     webridge_oauth2_access.smg_user_proxy:
-        class:     Webridge\Oauth2AccessBundle\Services\SMGUserProxy
-        factory: [ MVMS\ApiBundle\Security\SMGUserProxy, createForBaseUrl ]
-        arguments: [ %webridge_oauth2_access.upstream_base_url% ]
+        class:  Webridge\Oauth2AccessBundle\Services\SMGUserProxy
+        public: false
+        calls:
+            - [setContainer, ["@service_container"]]
+            - [configureRemoteEndpoints]
